@@ -20,10 +20,21 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
+		return { false, getStrikeNum(guessNumber), 0 };
 		return { false, 0, 0 };
 	}
 
 private:
+	int getStrikeNum(const string& guessNumber) {
+		int result = 0;
+		for (int i = 0; i < 3; i++) {
+			if (guessNumber[i] == question[i]) {
+				result++;
+			}
+		}
+		return result;
+	}
+
 	bool isDuplicateNumber(const std::string& guessNumber)	{
 		return guessNumber[0] == guessNumber[1]
 			|| guessNumber[0] == guessNumber[2]
