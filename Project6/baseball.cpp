@@ -17,17 +17,18 @@ public:
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		if (guessNumber == question) {
-			return { true, 3, 0 };
-		}
-		return { false, getStrikeNum(guessNumber), getBallNum(guessNumber)};
-		return { false, 0, 0 };
+
+		int numOfStrike = getStrikeNum(guessNumber);
+		int numOfBall = getBallNum(guessNumber);
+		bool solved = (numOfStrike == NUM_OF_BALLS);
+
+		return { solved, numOfStrike, numOfBall };
 	}
 
 private:
 	int getStrikeNum(const string& guessNumber) {
 		int result = 0;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < NUM_OF_BALLS; i++) {
 			if (guessNumber[i] == question[i]) {
 				result++;
 			}
@@ -37,7 +38,7 @@ private:
 
 	int getBallNum(const string& guessNumber) {
 		int result = 0;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < NUM_OF_BALLS; i++) {
 			if (guessNumber[i] != question[i]
 				&& question.find(guessNumber[i]) != string::npos) {
 				result++;
@@ -53,7 +54,7 @@ private:
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber) {
-		if (guessNumber.length() != 3) {
+		if (guessNumber.length() != NUM_OF_BALLS) {
 			throw length_error("Must be three letters");
 		}
 
@@ -67,5 +68,6 @@ private:
 		}
 	}
 
+	static const int NUM_OF_BALLS = 3;
 	string question;
 };
