@@ -20,7 +20,7 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		return { false, getStrikeNum(guessNumber), 0 };
+		return { false, getStrikeNum(guessNumber), getBallNum(guessNumber)};
 		return { false, 0, 0 };
 	}
 
@@ -29,6 +29,17 @@ private:
 		int result = 0;
 		for (int i = 0; i < 3; i++) {
 			if (guessNumber[i] == question[i]) {
+				result++;
+			}
+		}
+		return result;
+	}
+
+	int getBallNum(const string& guessNumber) {
+		int result = 0;
+		for (int i = 0; i < 3; i++) {
+			if (guessNumber[i] != question[i]
+				&& question.find(guessNumber[i]) != string::npos) {
 				result++;
 			}
 		}
